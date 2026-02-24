@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LO Moussa - CV Développeur Full Stack</title>
+    <!-- Font Awesome 6 (gratuit) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- html2pdf.js pour la génération PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         * {
             margin: 0;
@@ -126,6 +130,7 @@
 
         .contact-item i {
             font-size: 16px;
+            width: 16px;
         }
 
         .contact-item a {
@@ -182,6 +187,12 @@
             display: inline-block;
         }
 
+        .section-title i {
+            color: #3498db;
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
         /* Compétences */
         .skill-category {
             margin-bottom: 20px;
@@ -191,6 +202,14 @@
             color: #34495e;
             margin-bottom: 10px;
             font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-category h4 i {
+            color: #3498db;
+            width: 20px;
         }
 
         .skills {
@@ -208,6 +227,14 @@
             transition: all 0.3s ease;
             border: 1px solid #e0e0e0;
             cursor: default;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .skill-tag i {
+            color: #3498db;
+            font-size: 12px;
         }
 
         .skill-tag:hover {
@@ -215,6 +242,10 @@
             color: white;
             transform: scale(1.05);
             border-color: #3498db;
+        }
+
+        .skill-tag:hover i {
+            color: white;
         }
 
         /* Projets */
@@ -226,23 +257,34 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
             cursor: pointer;
+            border-left: 4px solid transparent;
         }
 
         .project-item:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(52, 152, 219, 0.2);
+            border-left-color: #3498db;
         }
 
         .project-item h4 {
             color: #2c3e50;
             margin-bottom: 10px;
             font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .project-item h4 i {
+            color: #3498db;
+            font-size: 20px;
         }
 
         .project-item p {
             color: #7f8c8d;
             font-size: 14px;
             line-height: 1.6;
+            margin-left: 28px;
         }
 
         .project-tech {
@@ -250,6 +292,7 @@
             flex-wrap: wrap;
             gap: 8px;
             margin-top: 10px;
+            margin-left: 28px;
         }
 
         .tech-badge {
@@ -258,6 +301,13 @@
             padding: 4px 10px;
             border-radius: 15px;
             font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tech-badge i {
+            font-size: 10px;
         }
 
         /* Formation */
@@ -276,12 +326,32 @@
         .education-item h4 {
             color: #2c3e50;
             margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .education-item h4 i {
+            color: #3498db;
         }
 
         .education-item .date {
             color: #7f8c8d;
             font-size: 14px;
             margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 24px;
+        }
+
+        .education-item .date i {
+            color: #3498db;
+            font-size: 12px;
+        }
+
+        .education-item p {
+            margin-left: 24px;
         }
 
         /* Langues et centres d'intérêt */
@@ -301,6 +371,15 @@
         .lang-item:hover, .interest-item:hover {
             transform: translateX(5px);
             background: #3498db;
+            color: white;
+        }
+
+        .lang-item i, .interest-item i {
+            width: 20px;
+            color: #3498db;
+        }
+
+        .lang-item:hover i, .interest-item:hover i {
             color: white;
         }
 
@@ -339,7 +418,7 @@
             background: #e74c3c;
             color: white;
             border: none;
-            padding: 10px 25px;
+            padding: 12px 30px;
             border-radius: 25px;
             font-size: 16px;
             cursor: pointer;
@@ -347,12 +426,59 @@
             margin-top: 10px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
         }
 
         .download-btn:hover {
             background: #c0392b;
             transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .download-btn i {
+            font-size: 18px;
+        }
+
+        /* Loading overlay pour le PDF */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-spinner {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .loading-spinner i {
+            font-size: 50px;
+            color: #3498db;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-spinner p {
+            margin-top: 15px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         /* Responsive */
@@ -374,36 +500,42 @@
     </style>
 </head>
 <body>
-    <div class="cv-container">
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-circle-notch"></i>
+            <p>Génération du PDF en cours...</p>
+        </div>
+    </div>
+
+    <div class="cv-container" id="cv-content">
         <!-- Header avec photo -->
         <div class="cv-header">
             <div class="photo-container" id="photoContainer">
-                <!-- <div class="photo-placeholder" id="photoPlaceholder">ML</div> -->
-                <!-- Pour ajouter une vraie photo, décommentez la ligne ci-dessous et commentez la ligne au-dessus -->
-                 <img src="moussa.webp" alt="LO Moussa"> 
+                <img src="moussa.webp" alt="LO Moussa" id="profileImage"> 
             </div>
             <div class="header-info">
                 <h1 id="name">LO Moussa</h1>
                 <div class="title" id="title">Étudiant en Licence 2 Informatique<br>Développeur Full Stack & Web Designer</div>
                 <div class="contact-info">
                     <div class="contact-item">
-                        <i>📧</i>
+                        <i class="fas fa-envelope"></i>
                         <span id="email">ml.moussalo1@gmail.com</span>
                     </div>
                     <div class="contact-item">
-                        <i>📱</i>
+                        <i class="fas fa-phone-alt"></i>
                         <span id="phone">+221 76 846 18 53</span>
                     </div>
                     <div class="contact-item">
-                        <i>📍</i>
+                        <i class="fas fa-map-marker-alt"></i>
                         <span id="location">Dakar, Sénégal</span>
                     </div>
                     <div class="contact-item">
-                        <i>🔗</i>
+                        <i class="fab fa-linkedin"></i>
                         <a href="https://www.linkedin.com/in/moussa-neuer-lo-b8b0b93a8/" target="_blank">LinkedIn</a>
                     </div>
                     <div class="contact-item">
-                        <i>💻</i>
+                        <i class="fas fa-globe"></i>
                         <a href="https://moussaneuer.github.io/" target="_blank">Portfolio</a>
                     </div>
                 </div>
@@ -416,63 +548,65 @@
             <div class="sidebar">
                 <!-- Compétences -->
                 <div class="section">
-                    <h3 class="section-title">Compétences</h3>
+                    <h3 class="section-title"><i class="fas fa-code"></i> Compétences</h3>
                     
                     <div class="skill-category">
-                        <h4>Langages de programmation</h4>
+                        <h4><i class="fas fa-laptop-code"></i> Langages de programmation</h4>
                         <div class="skills">
-                            <span class="skill-tag">PHP</span>
-                            <span class="skill-tag">CSS</span>
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Java</span>
-                            <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">HTML</span>
-                            <span class="skill-tag">Batch</span>
-                            <span class="skill-tag">C</span>
-                            <span class="skill-tag">Admin Réseaux & Systèmes (Linux)</span>
-                            <span class="skill-tag">Algo</span>
+                            <span class="skill-tag"><i class="fab fa-php"></i> PHP</span>
+                            <span class="skill-tag"><i class="fab fa-css3-alt"></i> CSS</span>
+                            <span class="skill-tag"><i class="fab fa-python"></i> Python</span>
+                            <span class="skill-tag"><i class="fab fa-java"></i> Java</span>
+                            <span class="skill-tag"><i class="fab fa-js"></i> JavaScript</span>
+                            <span class="skill-tag"><i class="fab fa-html5"></i> HTML</span>
+                            <span class="skill-tag"><i class="fas fa-terminal"></i> Batch</span>
+                            <span class="skill-tag"><i class="fas fa-code"></i> C</span>
+                            <span class="skill-tag"><i class="fas fa-network-wired"></i> Admin Réseaux & Systèmes</span>
+                            <span class="skill-tag"><i class="fas fa-sitemap"></i> Algo</span>
                         </div>
                     </div>
 
                     <div class="skill-category">
-                        <h4>Outils & Logiciels</h4>
+                        <h4><i class="fas fa-tools"></i> Outils & Logiciels</h4>
                         <div class="skills">
-                            <span class="skill-tag">Canva</span>
-                            <span class="skill-tag">Figma</span>
-                            <span class="skill-tag">Bureautique</span>
-                            <span class="skill-tag">Bootstrap</span>
-                            <span class="skill-tag">Git & GitHub</span>
-                            <span class="skill-tag">MySQL</span>
-                            <span class="skill-tag">Laragon</span>
-                            <span class="skill-tag">XAMPP</span>
-                            <span class="skill-tag">WAMP 64</span>
-                            <span class="skill-tag">Comptabilité Générale</span>
-                            <span class="skill-tag">Comptabilité Analytique</span>
+                            <span class="skill-tag"><i class="fab fa-canva"></i> Canva</span>
+                            <span class="skill-tag"><i class="fab fa-figma"></i> Figma</span>
+                            <span class="skill-tag"><i class="fas fa-file-alt"></i> Bureautique</span>
+                            <span class="skill-tag"><i class="fab fa-bootstrap"></i> Bootstrap</span>
+                            <span class="skill-tag"><i class="fab fa-git-alt"></i> Git & GitHub</span>
+                            <span class="skill-tag"><i class="fas fa-database"></i> MySQL</span>
+                            <span class="skill-tag"><i class="fas fa-server"></i> Laragon</span>
+                            <span class="skill-tag"><i class="fas fa-server"></i> XAMPP</span>
+                            <span class="skill-tag"><i class="fas fa-server"></i> WAMP 64</span>
+                            <span class="skill-tag"><i class="fas fa-calculator"></i> Comptabilité Générale</span>
+                            <span class="skill-tag"><i class="fas fa-chart-line"></i> Comptabilité Analytique</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Langues -->
                 <div class="section">
-                    <h3 class="section-title">Langues</h3>
+                    <h3 class="section-title"><i class="fas fa-language"></i> Langues</h3>
                     <div class="lang-item">
-                        <span>🇫🇷 Français</span>
+                        <i class="fas fa-flag"></i>
+                        <span>Français</span>
                         <span class="lang-level">Courant</span>
                     </div>
                     <div class="lang-item">
-                        <span>🇬🇧 Anglais</span>
+                        <i class="fas fa-flag-usa"></i>
+                        <span>Anglais</span>
                         <span class="lang-level">Intermédiaire</span>
                     </div>
                 </div>
 
                 <!-- Centres d'intérêt -->
                 <div class="section">
-                    <h3 class="section-title">Centres d'intérêt</h3>
+                    <h3 class="section-title"><i class="fas fa-heart"></i> Centres d'intérêt</h3>
                     <div class="interests">
-                        <div class="interest-item">⚽ Football</div>
-                        <div class="interest-item">💪 Gym/Fitness</div>
-                        <div class="interest-item">🎮 Jeux Vidéos</div>
-                        <div class="interest-item">🚀 Création de projets</div>
+                        <div class="interest-item"><i class="fas fa-futbol"></i> Football</div>
+                        <div class="interest-item"><i class="fas fa-dumbbell"></i> Gym/Fitness</div>
+                        <div class="interest-item"><i class="fas fa-gamepad"></i> Jeux Vidéos</div>
+                        <div class="interest-item"><i class="fas fa-rocket"></i> Création de projets</div>
                     </div>
                 </div>
             </div>
@@ -481,7 +615,7 @@
             <div class="main">
                 <!-- Profil -->
                 <div class="section">
-                    <h3 class="section-title">Profil</h3>
+                    <h3 class="section-title"><i class="fas fa-user"></i> Profil</h3>
                     <p style="color: #7f8c8d; line-height: 1.8;">
                         Étudiant passionné en Licence 2 Informatique Appliquée au Groupe ISI, 
                         je combine développement web full stack, design et entrepreneuriat. 
@@ -492,65 +626,65 @@
 
                 <!-- Projets -->
                 <div class="section">
-                    <h3 class="section-title">Projets Réalisés</h3>
+                    <h3 class="section-title"><i class="fas fa-project-diagram"></i> Projets Réalisés</h3>
                     
                     <div class="project-item">
-                        <h4>Portfolio Personnel</h4>
+                        <h4><i class="fas fa-user-circle"></i> Portfolio Personnel</h4>
                         <p>Création d'un portfolio moderne pour présenter mes projets et compétences en développement web.</p>
                         <div class="project-tech">
-                            <span class="tech-badge">HTML</span>
-                            <span class="tech-badge">CSS</span>
-                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge"><i class="fab fa-html5"></i> HTML</span>
+                            <span class="tech-badge"><i class="fab fa-css3-alt"></i> CSS</span>
+                            <span class="tech-badge"><i class="fab fa-js"></i> JavaScript</span>
                         </div>
                     </div>
 
                     <div class="project-item">
-                        <h4>Projet Confession</h4>
+                        <h4><i class="fas fa-comment-dots"></i> Projet Confession</h4>
                         <p>Application web innovante permettant aux utilisateurs de partager anonymement leurs confessions.</p>
                         <div class="project-tech">
-                            <span class="tech-badge">HTML</span>
-                            <span class="tech-badge">JavaScript</span>
-                            <span class="tech-badge">CSS</span>
+                            <span class="tech-badge"><i class="fab fa-html5"></i> HTML</span>
+                            <span class="tech-badge"><i class="fab fa-js"></i> JavaScript</span>
+                            <span class="tech-badge"><i class="fab fa-css3-alt"></i> CSS</span>
                         </div>
                     </div>
 
                     <div class="project-item">
-                        <h4>Gestion de Produits</h4>
+                        <h4><i class="fas fa-boxes"></i> Gestion de Produits</h4>
                         <p>Application de gestion de produits pour une entreprise, incluant l'ajout, la modification et la suppression de produits.</p>
                         <div class="project-tech">
-                            <span class="tech-badge">PHP</span>
-                            <span class="tech-badge">HTML</span>
-                            <span class="tech-badge">Bootstrap</span>
-                            <span class="tech-badge">CSS</span>
-                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge"><i class="fab fa-php"></i> PHP</span>
+                            <span class="tech-badge"><i class="fab fa-html5"></i> HTML</span>
+                            <span class="tech-badge"><i class="fab fa-bootstrap"></i> Bootstrap</span>
+                            <span class="tech-badge"><i class="fab fa-css3-alt"></i> CSS</span>
+                            <span class="tech-badge"><i class="fas fa-database"></i> MySQL</span>
                         </div>
                     </div>
 
                     <div class="project-item">
-                        <h4>Welli Store</h4>
+                        <h4><i class="fas fa-store"></i> Welli Store</h4>
                         <p>Plateforme e-commerce pour la vente de produits compléments alimentaires, avec gestion complète des commandes.</p>
                         <div class="project-tech">
-                            <span class="tech-badge">PHP</span>
-                            <span class="tech-badge">JavaScript</span>
-                            <span class="tech-badge">CSS</span>
-                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge"><i class="fab fa-php"></i> PHP</span>
+                            <span class="tech-badge"><i class="fab fa-js"></i> JavaScript</span>
+                            <span class="tech-badge"><i class="fab fa-css3-alt"></i> CSS</span>
+                            <span class="tech-badge"><i class="fas fa-database"></i> MySQL</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Formation -->
                 <div class="section">
-                    <h3 class="section-title">Formation</h3>
+                    <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Formation</h3>
                     
                     <div class="education-item">
-                        <h4>Licence 2 en Informatique Appliquée</h4>
-                        <div class="date">2024 - Présent</div>
+                        <h4><i class="fas fa-university"></i> Licence 2 en Informatique Appliquée</h4>
+                        <div class="date"><i class="far fa-calendar-alt"></i> 2024 - Présent</div>
                         <p style="color: #7f8c8d;">Groupe ISI (Institut Supérieur d'Informatique), Dakar</p>
                     </div>
 
                     <div class="education-item">
-                        <h4>Baccalauréat L2</h4>
-                        <div class="date">2023 - 2024</div>
+                        <h4><i class="fas fa-school"></i> Baccalauréat L2</h4>
+                        <div class="date"><i class="far fa-calendar-alt"></i> 2023 - 2024</div>
                         <p style="color: #7f8c8d;">Institution Saint Louis Marie Grignon</p>
                     </div>
                 </div>
@@ -560,13 +694,69 @@
         <!-- Footer avec bouton de téléchargement -->
         <div class="cv-footer">
             <button class="download-btn" onclick="downloadCV()">
-                📥 Télécharger CV (PDF)
+                <i class="fas fa-file-pdf"></i> Télécharger CV (PDF)
             </button>
-            <p style="margin-top: 15px; opacity: 0.7;">© 2025 LO Moussa - Tous droits réservés</p>
+            <p style="margin-top: 15px; opacity: 0.7;">
+                <i class="far fa-copyright"></i> 2025 LO Moussa - Tous droits réservés
+            </p>
         </div>
     </div>
 
     <script>
+        // Fonction de téléchargement PDF avec html2pdf
+        function downloadCV() {
+            const element = document.getElementById('cv-content');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const btn = event.currentTarget;
+            
+            // Sauvegarder le texte original du bouton
+            const originalText = btn.innerHTML;
+            
+            // Afficher le loading
+            loadingOverlay.style.display = 'flex';
+            btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Génération...';
+            btn.disabled = true;
+            
+            // Options pour le PDF
+            const options = {
+                margin:        [0.5, 0.5, 0.5, 0.5], // haut, gauche, bas, droite (en cm)
+                filename:     'CV_LO_Moussa.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, letterRendering: true, useCORS: true, allowTaint: true },
+                jsPDF:        { unit: 'cm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Générer le PDF
+            html2pdf().set(options).from(element).save()
+                .then(() => {
+                    // Succès
+                    loadingOverlay.style.display = 'none';
+                    btn.innerHTML = '<i class="fas fa-check"></i> Téléchargé !';
+                    btn.style.background = '#27ae60';
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = '#e74c3c';
+                        btn.disabled = false;
+                    }, 2000);
+                })
+                .catch((error) => {
+                    // Erreur
+                    console.error('Erreur PDF:', error);
+                    loadingOverlay.style.display = 'none';
+                    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erreur';
+                    btn.style.background = '#c0392b';
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = '#e74c3c';
+                        btn.disabled = false;
+                    }, 2000);
+                    
+                    alert('Erreur lors de la génération du PDF. Veuillez réessayer.');
+                });
+        }
+
         // Animation au scroll
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('.section');
@@ -583,64 +773,71 @@
                 observer.observe(section);
             });
 
-            // Interaction avec la photo
+            // Gestion de la photo
             const photoContainer = document.getElementById('photoContainer');
+            const profileImage = document.getElementById('profileImage');
+            
             photoContainer.addEventListener('click', function() {
-                alert('Pour ajouter votre vraie photo :\n1. Ajoutez une image "votre-photo.jpg" dans le même dossier\n2. Décommentez la ligne img dans le HTML\n3. Commentez la div photo-placeholder');
+                // Créer un input file caché
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                
+                input.onchange = function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            profileImage.src = event.target.result;
+                            // Sauvegarder dans localStorage pour persister
+                            localStorage.setItem('profileImage', event.target.result);
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                };
+                
+                input.click();
             });
 
-            // Animation au survol des contacts
+            // Charger l'image sauvegardée
+            const savedImage = localStorage.getItem('profileImage');
+            if (savedImage) {
+                profileImage.src = savedImage;
+            }
+
+            // Animation au clic sur les contacts
             const contactItems = document.querySelectorAll('.contact-item');
             contactItems.forEach(item => {
-                item.addEventListener('click', function() {
+                item.addEventListener('click', function(e) {
+                    if (e.target.tagName === 'A') return;
+                    
                     const text = this.querySelector('span, a').innerText;
                     if (text.includes('@')) {
                         window.location.href = 'mailto:' + text;
                     } else if (text.includes('76') || text.includes('77') || text.includes('78')) {
-                        alert('Numéro: ' + text);
-                    } else if (text.includes('http')) {
-                        window.open(text, '_blank');
+                        navigator.clipboard.writeText(text).then(() => {
+                            alert('📱 Numéro copié !');
+                        });
+                    } else if (text.includes('Dakar')) {
+                        alert('📍 ' + text);
                     }
                 });
             });
+
+            // Animation au survol des projets
+            const projectItems = document.querySelectorAll('.project-item');
+            projectItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const projectName = this.querySelector('h4').innerText;
+                    alert(`🚀 Projet: ${projectName}\nTechnologies utilisées: ` + 
+                          Array.from(this.querySelectorAll('.tech-badge')).map(t => t.innerText).join(', '));
+                });
+            });
+
+            // Afficher les compétences en console
+            console.log('%c🚀 CV de LO Moussa chargé avec succès!', 'color: #3498db; font-size: 16px; font-weight: bold;');
+            console.log('%c💻 Compétences: ' + ['PHP', 'CSS', 'Python', 'Java', 'JavaScript', 'HTML', 'Batch', 'C', 'Admin Réseaux', 'Algo'].join(', '), 'color: #27ae60;');
         });
-
-        // Fonction pour télécharger le CV (simulé)
-        function downloadCV() {
-            alert('Fonctionnalité de téléchargement PDF à implémenter.\nVous pouvez utiliser des bibliothèques comme jsPDF ou html2pdf pour générer un vrai PDF.');
-            
-            // Animation du bouton
-            const btn = event.currentTarget;
-            btn.innerHTML = '📥 Génération...';
-            btn.style.background = '#27ae60';
-            
-            setTimeout(() => {
-                btn.innerHTML = '📥 Télécharger CV (PDF)';
-                btn.style.background = '#e74c3c';
-            }, 2000);
-        }
-
-        // Effet de typing pour le titre
-        const titleElement = document.getElementById('title');
-        const originalText = titleElement.innerHTML;
-        let isTyping = false;
-
-        titleElement.addEventListener('mouseenter', function() {
-            if (!isTyping) {
-                isTyping = true;
-                this.style.animation = 'none';
-                this.offsetHeight;
-                this.style.animation = null;
-                
-                setTimeout(() => {
-                    isTyping = false;
-                }, 1000);
-            }
-        });
-
-        // Afficher les compétences en console (pour le fun)
-        console.log('🚀 CV de LO Moussa chargé avec succès!');
-        console.log('💻 Compétences:', ['PHP', 'CSS', 'Python', 'Java', 'JavaScript', 'HTML', 'Batch', 'C', 'Algo']);
     </script>
 </body>
 </html>
