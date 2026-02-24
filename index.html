@@ -714,8 +714,21 @@
     </div>
 
     <script>
+        // Suivi des clics sur les liens externes
+document.querySelectorAll('a[target="_blank"]').forEach(link => {
+    link.addEventListener('click', function() {
+        gtag('event', 'click', {
+            'event_category': 'outbound',
+            'event_label': this.href
+        });
+    });
+});
         // Fonction de téléchargement PDF avec html2pdf
         function downloadCV() {
+             gtag('event', 'download', {
+        'event_category': 'CV',
+        'event_label': 'Téléchargement PDF'
+    });
             const element = document.getElementById('cv-content');
             const loadingOverlay = document.getElementById('loadingOverlay');
             const btn = event.currentTarget;
